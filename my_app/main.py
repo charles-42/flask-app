@@ -1,12 +1,12 @@
 from flask import Blueprint, render_template
 from flask_login import login_required, current_user
-from . import db, rbac
+from .utils import admin_required
+from . import db
 
 
 main = Blueprint('main', __name__)
 
 @main.route('/')
-@rbac.exempt
 def index():
     return render_template('index.html')
 
@@ -17,5 +17,6 @@ def profile():
 
 @main.route('/admin', methods=['GET'])
 @login_required
+@admin_required
 def admin_page():
     return render_template('profile.html', name=current_user.name)
