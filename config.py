@@ -12,6 +12,8 @@ if os.environ.get('PRODUCTION') is None:
     basedir = os.path.abspath(os.path.dirname(__file__))
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
     SECRET_KEY = '#d#JCqTTW\nilK\\7m\x0bp#\tj~#H'
+    RBAC_USE_WHITE = True
+    SQLALCHEMY_TRACK_MODIFICATIONS = False
 else:
 # Production config
     SQLALCHEMY_DATABASE_URI = os.environ['DATABASE_URL']
