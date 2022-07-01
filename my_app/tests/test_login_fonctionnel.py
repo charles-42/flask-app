@@ -16,6 +16,8 @@ import pytest
 # First party modules
 from flask import Flask
 
+from my_app import app
+
 @pytest.fixture
 def client():
     app = Flask(__name__)
