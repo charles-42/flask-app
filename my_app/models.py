@@ -1,8 +1,10 @@
 from flask_sqlalchemy import SQLAlchemy
 import logging as lg
 from flask_login import UserMixin
-from my_app import db
 
+
+
+db = SQLAlchemy()
 
 
 class User(UserMixin,db.Model):
