@@ -1,20 +1,18 @@
-import os
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-from flask_rbac import RBAC
+from .models import init_db
 
-def create_app(test_config=None):
+def create_app(mode = "development"):
     app = Flask(__name__, instance_relative_config=True)
     
-    if test_config is None:
-        app.config.from_object('config')
-    else:
-        app.config.from_object('config')
-    # Create database connection object
-    db = SQLAlchemy(app)
-    #db.init_app(app)
+    if mode  == "development":
+        app.config.from_object('config.DevelopmentConfig')
+    elif mode == "test":
+        app.config.from_object('config.TestingConfig')
+    elif mode == "production":
+        app.config.from_object('config.ProductionConfig')
 
+    from my_app.models import db
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'
@@ -43,3 +41,4 @@ def create_app(test_config=None):
     app.register_blueprint(main_blueprint)
 
     return app
+
