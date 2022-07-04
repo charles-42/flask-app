@@ -1,6 +1,7 @@
 from flask import Flask
 from flask_login import LoginManager
 from .models import init_db
+from flask_sqlalchemy import SQLAlchemy
 
 def create_app(mode = "development"):
     app = Flask(__name__, instance_relative_config=True)
@@ -12,7 +13,9 @@ def create_app(mode = "development"):
     elif mode == "production":
         app.config.from_object('config.ProductionConfig')
 
-    from my_app.models import db
+    #from my_app.models import db
+
+    db = SQLAlchemy(app)
 
     login_manager = LoginManager()
     login_manager.login_view = 'auth.login'

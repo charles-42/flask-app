@@ -18,4 +18,4 @@ def profile():
 @login_required
 @admin_required
 def admin_page():
-    return render_template('profile.html', name=current_user.name)
+    return render_template('admin_profile.html', name=current_user.name)
