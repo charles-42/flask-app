@@ -1,3 +1,4 @@
+from email.policy import default
 from flask_sqlalchemy import SQLAlchemy
 import logging as lg
 from flask_login import UserMixin
@@ -15,7 +16,7 @@ class User(UserMixin,db.Model):
     password = db.Column(db.String(100))
     name = db.Column(db.String(1000))
 
-    group = db.Column(db.Integer)
+    group = db.Column(db.Integer, default=1)
 
 
     def __repr__(self):
@@ -24,7 +25,7 @@ class User(UserMixin,db.Model):
     def json(self):
         return {
             'id': self.id, 
-            'email_address': self.email_address,
+            'email': self.email,
             'name': self.name,
             'group': self.group
             }

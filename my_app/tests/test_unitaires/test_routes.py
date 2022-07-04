@@ -1,11 +1,10 @@
 from flask import url_for
 from flask import session
-from ..models import User
+from ...models import User
 from flask_login import current_user
-# Test du fonctionnement du client de test
+from werkzeug.security import check_password_hash
 
-def test_configtest(app):
-    assert app.config["TESTING"] == True
+
 
 ##################### Test des routes de main #####################
 
@@ -33,9 +32,9 @@ def test_profile_not_logged(client):
 
 ### Test de Profile en étant connecté
 
-def test_profile_logged(client):
+def test_profile_logged(client,captured_templates):
     
-    User(email = "test@test.test", password = 'sha256$zU9nb9Fu6i2pLdmP$a1587105ab6efe3dd726cade3e95ab3ac039d58c0ecf40395871a0a071948c8f').save_to_db()
+    User(email = "test@test.test", name = "test", password = 'sha256$zU9nb9Fu6i2pLdmP$a1587105ab6efe3dd726cade3e95ab3ac039d58c0ecf40395871a0a071948c8f').save_to_db()
     route = "/profile"
     # on va utiliser le mécanisme de session pour faire une première requete de log
     # puis les requetes que l'on recherche.
@@ -45,8 +44,11 @@ def test_profile_logged(client):
         response = client.get(route) 
         assert response.status_code == 200 #unauthorize
         assert response.request.path == "/profile"
-        assert b"<title>Profile page</title>" in response.data
-
+        template, context = captured_templates[0]
+        # On teste si on utilise le bon template
+        assert template.name == "profile.html"
+        # On teste maintenant si on envoie les bonnes informations au template
+        assert context["name"] == "test"
 ### Test de Admin
 
 ### Test de Admin sans être connecté
@@ -80,9 +82,9 @@ def test_admin_logged_not_admin(client):
 
 ### Test de Admin en étant connecté comme admin
 
-def test_admin_logged_as_admin(client):
+def test_admin_logged_as_admin(client, captured_templates):
     
-    User(email = "test@test.test", group = 0, password = 'sha256$zU9nb9Fu6i2pLdmP$a1587105ab6efe3dd726cade3e95ab3ac039d58c0ecf40395871a0a071948c8f').save_to_db()
+    User(email = "test@test.test", group = 0, name= "test", password = 'sha256$zU9nb9Fu6i2pLdmP$a1587105ab6efe3dd726cade3e95ab3ac039d58c0ecf40395871a0a071948c8f').save_to_db()
     route = "/admin"
     # on va utiliser le mécanisme de session pour faire une première requete de log
     # puis les requetes que l'on recherche.
@@ -92,7 +94,12 @@ def test_admin_logged_as_admin(client):
         response = client.get(route) 
         assert response.status_code == 200 #unauthorize
         assert response.request.path == "/admin"
-        assert b"<title>Admin Profile page</title>" in response.data
+        template, context = captured_templates[0]
+        # On teste si on utilise le bon template
+        assert template.name == "admin_profile.html"
+        # On teste maintenant si on envoie les bonnes informations au template
+        assert context["name"] == "test"
+        
 
 
 
@@ -150,9 +157,16 @@ def test_Signup_get(client):
 
 def test_Signup_post_success(client):
     route = "/signup"
-    response = client.post(route, data={"email": "test@test.test", "password" : "test"}, follow_redirects=True)
-    assert response.status_code == 200
-    assert response.request.path == "/login"
+    with client:
+        response = client.post(route, data={"email": "test@test.test", "password" : "test"}, follow_redirects=True)
+        assert response.status_code == 200
+        assert response.request.path == "/login"
+        # on vérifie qu'un client a été créé dans la data base
+        created_user = User.find_by_email("test@test.test") 
+        assert created_user.email == "test@test.test"
+        assert created_user.group == 1
+        assert check_password_hash(created_user.password, "test") 
+        
 
 # On ne fait pas de test sur le validateur de l'email car ce dernier est dans le fichier html
 # Il faudra donc le tester au moment des tests fonctionnels
