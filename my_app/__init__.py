@@ -2,8 +2,10 @@ from flask import Flask
 from flask_login import LoginManager
 from .models import init_db
 from flask_sqlalchemy import SQLAlchemy
+from dotenv import load_dotenv
 
 def create_app(mode = "development"):
+    load_dotenv()
     app = Flask(__name__, instance_relative_config=True)
     
     if mode  == "development":
