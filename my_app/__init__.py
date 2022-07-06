@@ -21,7 +21,7 @@ from opentelemetry.instrumentation.flask import FlaskInstrumentor
 def create_app(mode = "development"):
     
     # Upload env variables
-    load_dotenv(override=True)
+    load_dotenv()
     
     # Create APP
     app = Flask(__name__, instance_relative_config=True)
