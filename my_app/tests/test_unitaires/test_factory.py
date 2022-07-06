@@ -12,5 +12,3 @@ def test_configtest(app):
     assert "main" in  app.blueprints
 
     assert app.config["TESTING"] == True
-    assert app.config["SQLALCHEMY_DATABASE_URI"] == 'sqlite:////Users/charles/Documents/pythonProject/flask-app/app_test.db'
-
