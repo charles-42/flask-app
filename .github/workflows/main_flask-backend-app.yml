@@ -31,6 +31,8 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Test and coverage
+        env: 
+          CONNEXION_STRING: ${{ secrets.CONNEXION_STRING }}
         run: pytest 
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
