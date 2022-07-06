@@ -3,6 +3,7 @@ flask-sqlalchemy
 flask-login
 python-dotenv
 pytest
+pytest-cov
 selenium
 flask-testing
 webdriver_manager
