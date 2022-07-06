@@ -32,7 +32,7 @@ jobs:
 
       - name: Test and coverage
         env: 
-          CONNEXION_STRING: ${{ secrets.CONNEXION_STRING }}
+          CONNEXION_STRING: "InstrumentationKey=5bd1fbd8-bda4-45c6-bfb5-4548bc488d16"
         run: pytest 
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
