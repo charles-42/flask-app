@@ -31,7 +31,7 @@ jobs:
         run: pip install -r requirements.txt
 
       - name: Test and coverage
-        run: pytest --cov==. --cov-fail-under=80
+        run: pytest 
         
       # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
       
