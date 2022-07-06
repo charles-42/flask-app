@@ -1,7 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 import pytest
 from my_app import create_app, init_db
-
+from flask import template_rendered
 
 @pytest.fixture
 def app():
@@ -36,3 +36,16 @@ def driver():
     chrome_driver = "/usr/local/bin/chromedriver"
     with webdriver.Chrome(service=Service(ChromeDriverManager().install())) as driver:
         yield driver
+
+@pytest.fixture
+def captured_templates(app):
+    recorded = []
+
+    def record(sender, template, context, **extra):
+        recorded.append((template, context))
+
+    template_rendered.connect(record, app)
+    try:
+        yield recorded
+    finally:
+        template_rendered.disconnect(record, app)

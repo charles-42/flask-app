@@ -11,6 +11,7 @@ class Config(object):
     SECRET_KEY = '#d#JCqTTW\nilK\\7m\x0bp#\tj~#H'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     DEBUG = True
+
 class ProductionConfig(Config):
     DEBUG = False
     SQLALCHEMY_DATABASE_URI = "ma super base de prode"
