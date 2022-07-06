@@ -88,7 +88,7 @@ def create_app(mode = "development"):
     # tracer = trace.get_tracer(__name__)
     # span_processor = BatchSpanProcessor(exporter)
     # trace.get_tracer_provider().add_span_processor(span_processor)
-    FlaskInstrumentor().instrument_app(app)
+    # FlaskInstrumentor().instrument_app(app)
 
 
     return app
