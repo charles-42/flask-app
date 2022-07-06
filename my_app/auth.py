@@ -13,6 +13,8 @@ def login():
 @auth.route('/login', methods=['POST'])
 def login_post():
     # login code goes here
+    current_app.logger.info("Login attempt", extra = {'page':'login'})
+   
     email = request.form.get('email')
     password = request.form.get('password')
     remember = True if request.form.get('remember') else False
@@ -23,10 +25,13 @@ def login_post():
     # take the user-supplied password, hash it, and compare it to the hashed password in the database
     if not user or not check_password_hash(user.password, password):
         flash('Please check your login details and try again.')
+        current_app.logger.warning("Login failed", extra = {'page':'login'})
         return redirect(url_for('auth.login')) # if the user doesn't exist or password is wrong, reload the page
 
     # if the above check passes, then we know the user has the right credentials
     login_user(user, remember=remember)
+
+    current_app.logger.info("Login succes", extra = {'page':'login'})
 
     return redirect(url_for('main.profile'))
 
