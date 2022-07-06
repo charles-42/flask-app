@@ -7,3 +7,4 @@ pytest-cov
 selenium
 flask-testing
 webdriver_manager
+opencensus-ext-azure
