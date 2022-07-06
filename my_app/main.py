@@ -13,6 +13,8 @@ def index():
 @login_required
 def profile():
     first_name = current_user.name
+    if not current_user.name:
+        return render_template('admin_profile.html', name=current_user.name,age = 'young') 
     api_result = requests.get('https://api.agify.io/?name=' + first_name)
     return render_template('profile.html', name=current_user.name, age = api_result.json()['age'])
 
@@ -20,6 +22,8 @@ def profile():
 @login_required
 @admin_required
 def admin_page():
+    first_name = current_user.name
+    if not current_user.name:
+        return render_template('admin_profile.html', name=current_user.name,age = 'young') 
     api_result = requests.get('https://api.agify.io/?name=' + first_name)
-
     return render_template('admin_profile.html', name=current_user.name,age = api_result.json()['age'])
