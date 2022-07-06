@@ -17,3 +17,5 @@ opencensus.ext.sqlalchemy
 
 azure-monitor-opentelemetry-exporter 
 opentelemetry-instrumentation-flask
+
+requests

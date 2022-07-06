@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template
 from flask_login import login_required, current_user
 from .utils import admin_required
-
+import requests
 
 main = Blueprint('main', __name__)
 
@@ -12,10 +12,14 @@ def index():
 @main.route('/profile')
 @login_required
 def profile():
-    return render_template('profile.html', name=current_user.name)
+    first_name = current_user.name
+    api_result = requests.get('https://api.agify.io/?name=' + first_name)
+    return render_template('profile.html', name=current_user.name, age = api_result.json()['age'])
 
 @main.route('/admin', methods=['GET'])
 @login_required
 @admin_required
 def admin_page():
-    return render_template('admin_profile.html', name=current_user.name)
+    api_result = requests.get('https://api.agify.io/?name=' + first_name)
+
+    return render_template('admin_profile.html', name=current_user.name,age = api_result.json()['age'])
