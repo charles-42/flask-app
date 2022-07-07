@@ -22,7 +22,8 @@ def create_app(mode = "development"):
     
     # Upload env variables
     load_dotenv()
-    
+    print("this is the instrument key ----------------------------------")
+    print(os.getenv('CONNEXION_STRING'))
     # Create APP
     app = Flask(__name__, instance_relative_config=True)
     
@@ -64,7 +65,6 @@ def create_app(mode = "development"):
     # blueprint for non-auth parts of app
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
-
 
     # Define monitoring
     middleware = FlaskMiddleware(app)

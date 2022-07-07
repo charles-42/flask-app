@@ -7,8 +7,7 @@ from flask import template_rendered
 def app():
 
     app = create_app('test')
-    db = SQLAlchemy(app)
-
+    
     with app.app_context():
         init_db()
 

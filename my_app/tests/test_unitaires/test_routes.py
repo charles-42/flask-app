@@ -178,7 +178,7 @@ def test_Signup_post_wrong_email(client):
 
 
 # On teste que si on ajoute deux fois le meme utilisateur, cela renvoie une erreur
-def test_Signup_post_already_a_customer(client):
+def test_Signup_post_already_a_user(client):
     User(email = "test@test.test", password = 'sha256$zU9nb9Fu6i2pLdmP$a1587105ab6efe3dd726cade3e95ab3ac039d58c0ecf40395871a0a071948c8f').save_to_db()  
     route = "/signup"
     response = client.post(route, data={"email": "test@test.test", "password" : "test"}, follow_redirects=True)

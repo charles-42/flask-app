@@ -1,7 +1,7 @@
 
 import os
 from dotenv import load_dotenv
-
+import tempfile
 load_dotenv()
 
 
@@ -21,8 +21,8 @@ class DevelopmentConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
 
 class TestingConfig(Config):
-    basedir = os.path.abspath(os.path.dirname(__file__))
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app_test.db')
+    db_fd, db_path = tempfile.mkstemp()
+    SQLALCHEMY_DATABASE_URI = "sqlite:///" + db_path
     TESTING = True
     LIVESERVER_PORT = 8943
     LIVESERVER_TIMEOUT = 10
