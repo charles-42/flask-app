@@ -81,7 +81,7 @@ def create_app(mode = "development"):
         connection_string=os.getenv('CONNEXION_STRING'))
 
 
-    OPentelemetry
+    #Opentelemetry
 
     exporter = AzureMonitorTraceExporter.from_connection_string(os.getenv('CONNEXION_STRING'))
 
