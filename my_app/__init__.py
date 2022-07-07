@@ -68,7 +68,7 @@ def create_app(mode = "development"):
     app.register_blueprint(main_blueprint)
 
     # Define monitoring
-    #middleware = FlaskMiddleware(app)
+    middleware = FlaskMiddleware(app)
     logger = logging.getLogger(__name__)
     logger.addHandler(AzureLogHandler(
     connection_string = os.getenv('CONNEXION_STRING'))
@@ -81,15 +81,15 @@ def create_app(mode = "development"):
         connection_string=os.getenv('CONNEXION_STRING'))
 
 
-    # OPentelemetry
+    OPentelemetry
 
-    # exporter = AzureMonitorTraceExporter.from_connection_string(os.getenv('CONNEXION_STRING'))
+    exporter = AzureMonitorTraceExporter.from_connection_string(os.getenv('CONNEXION_STRING'))
 
-    # trace.set_tracer_provider(TracerProvider())
-    # tracer = trace.get_tracer(__name__)
-    # span_processor = BatchSpanProcessor(exporter)
-    # trace.get_tracer_provider().add_span_processor(span_processor)
-    # FlaskInstrumentor().instrument_app(app)
+    trace.set_tracer_provider(TracerProvider())
+    tracer = trace.get_tracer(__name__)
+    span_processor = BatchSpanProcessor(exporter)
+    trace.get_tracer_provider().add_span_processor(span_processor)
+    FlaskInstrumentor().instrument_app(app)
 
 
     return app
