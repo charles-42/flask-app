@@ -24,6 +24,7 @@ def create_app(mode = "development"):
     load_dotenv()
     print("this is the instrument key ----------------------------------")
     print(os.getenv('CONNEXION_STRING'))
+    
     # Create APP
     app = Flask(__name__, instance_relative_config=True)
     
@@ -68,27 +69,27 @@ def create_app(mode = "development"):
 
     # Define monitoring
     #middleware = FlaskMiddleware(app)
-    # logger = logging.getLogger(__name__)
-    # logger.addHandler(AzureLogHandler(
-    # connection_string = os.getenv('CONNEXION_STRING'))
-    # )
-    # logger.setLevel(logging.INFO)
-    # config_integration.trace_integrations(['sqlalchemy'])
+    logger = logging.getLogger(__name__)
+    logger.addHandler(AzureLogHandler(
+    connection_string = os.getenv('CONNEXION_STRING'))
+    )
+    logger.setLevel(logging.INFO)
+    config_integration.trace_integrations(['sqlalchemy'])
 
-    # exporter = metrics_exporter.new_metrics_exporter(
-    #     enable_standard_metrics=False,
-    #     connection_string=os.getenv('CONNEXION_STRING'))
+    exporter = metrics_exporter.new_metrics_exporter(
+        enable_standard_metrics=False,
+        connection_string=os.getenv('CONNEXION_STRING'))
 
 
     # OPentelemetry
 
-    exporter = AzureMonitorTraceExporter.from_connection_string(os.getenv('CONNEXION_STRING'))
+    # exporter = AzureMonitorTraceExporter.from_connection_string(os.getenv('CONNEXION_STRING'))
 
-    trace.set_tracer_provider(TracerProvider())
-    tracer = trace.get_tracer(__name__)
-    span_processor = BatchSpanProcessor(exporter)
-    trace.get_tracer_provider().add_span_processor(span_processor)
-    FlaskInstrumentor().instrument_app(app)
+    # trace.set_tracer_provider(TracerProvider())
+    # tracer = trace.get_tracer(__name__)
+    # span_processor = BatchSpanProcessor(exporter)
+    # trace.get_tracer_provider().add_span_processor(span_processor)
+    # FlaskInstrumentor().instrument_app(app)
 
 
     return app
