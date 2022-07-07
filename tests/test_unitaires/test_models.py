@@ -1,6 +1,6 @@
 from flask import url_for
 from flask import session
-from ...models import User
+from my_app.models import User
 from flask_login import current_user
 from werkzeug.security import check_password_hash
 

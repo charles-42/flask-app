@@ -1,4 +1,4 @@
-from ...models import User
+from my_app.models import User
 
 def test_profile_template_context(client, captured_templates) -> None:
     User(email = "test@test.test", name = "test", password = 'sha256$zU9nb9Fu6i2pLdmP$a1587105ab6efe3dd726cade3e95ab3ac039d58c0ecf40395871a0a071948c8f').save_to_db()
