@@ -68,16 +68,16 @@ def create_app(mode = "development"):
 
     # Define monitoring
     #middleware = FlaskMiddleware(app)
-    logger = logging.getLogger(__name__)
-    logger.addHandler(AzureLogHandler(
-    connection_string = os.getenv('CONNEXION_STRING'))
-    )
-    logger.setLevel(logging.INFO)
-    config_integration.trace_integrations(['sqlalchemy'])
+    # logger = logging.getLogger(__name__)
+    # logger.addHandler(AzureLogHandler(
+    # connection_string = os.getenv('CONNEXION_STRING'))
+    # )
+    # logger.setLevel(logging.INFO)
+    # config_integration.trace_integrations(['sqlalchemy'])
 
-    exporter = metrics_exporter.new_metrics_exporter(
-        enable_standard_metrics=False,
-        connection_string=os.getenv('CONNEXION_STRING'))
+    # exporter = metrics_exporter.new_metrics_exporter(
+    #     enable_standard_metrics=False,
+    #     connection_string=os.getenv('CONNEXION_STRING'))
 
 
     # OPentelemetry
